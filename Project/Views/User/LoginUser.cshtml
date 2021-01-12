@@ -1,0 +1,58 @@
+﻿@model Project.Models.User
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/MyStyle.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Login for users</title>
+</head>
+<body>
+    <div class="topnav">
+        <a href="@Url.Action("MovieGallery", "User")">
+            <span> Movie Gallery</span>
+        </a>
+        <a class="active" href="">Login for users</a>
+
+        <a href="@Url.Action("RegisterUser", "User")">
+            <span> Register for users</span>
+        </a>
+        <a href="@Url.Action("ShoppingCart", "User")">
+            <span> Shopping Cart</span>
+        </a>
+
+        <a href="@Url.Action("LoginAdmin", "Admin")">
+            <span> Login for admins</span>
+        </a>
+        <a href="@Url.Action("RegisterAdmin", "Admin")">
+            <span> Register for admins</span>
+        </a>
+
+    </div>
+    <div>
+        <form action="SubLoginUser" method="post">
+
+            <h1>Login for users</h1>
+            <br />
+            email : <input id="Text1" type="email" name="email" required />
+            <br />
+            password : <input id="Text1" type="password" name="password" required />
+            <br />
+
+            <input id="Submit1" type="submit" value="Login" />
+
+        </form>
+    </div>
+</body>
+</html>
+
+@if (TempData["testmsg"] != null)
+{
+<h4 style="color:red;"> @TempData["testmsg"] </h4>
+}

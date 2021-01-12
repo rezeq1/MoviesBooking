@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/MyStyle.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Add a new movie</title>
+</head>
+<body>
+    <div class="topnav">
+        <a href="@Url.Action("MovieGallery", "User")">
+            <span>Home Page</span>
+        </a>
+
+        <a href="@Url.Action("RemoveMovie", "Admin")">
+            <span>Remove Movies</span>
+        </a>
+        <a class="active" href="">Add Movies</a>
+        <a href="@Url.Action("ManagingPrices", "Admin")">
+            <span>Managing Prices</span>
+        </a>
+        <a href="@Url.Action("ManagingHalls", "Admin")">
+            <span>Managing Movie Halls</span>
+        </a>
+        <a href="@Url.Action("ManagingSeats", "Admin")">
+            <span>Managing Seats Number</span>
+        </a>
+        <a href="@Url.Action("AddHall", "Admin")">
+            <span>Add Hall</span>
+        </a>
+    </div>
+
+    <div>
+        <form action="SubAddMovie" method="post" enctype="multipart/form-data">
+            <h1> Add a new movie </h1>
+            <br />
+            Movie name   :<input id="Text1" type="text" name="MovieName" required />
+            <br />
+            Movie date   :<input id="dateText" type="date" name="date" required />
+            <br />
+            Movie time   :<input id="Text1" type="time" name="time" required />
+            <br />
+            Hall id      :<input id="Text1" type="number" min="1" name="HallId" required />
+            <br />
+            Movie price  :<input id="Text1" type="number" min="0" name="price" required />
+            <br />
+            Age limitation      :<input id="Text1" type="number" min="0" name="age" required />
+            <br />
+            Movie category  :<input id="Text1" type="text" name="category" required />
+            <br />
+            Movie poster :<input id="Text1" type="file" name="ImageBytes" required />
+            <br />
+            <input id="Submit1" type="submit" value="Add" />
+
+
+        </form>
+    </div>
+</body>
+</html>
+
+@if (TempData["msg"] != null)
+{
+    <h4 style="color:@TempData["color"];"> @TempData["msg"] </h4>
+}
+

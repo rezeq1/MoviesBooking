@@ -1,0 +1,152 @@
+﻿@using Project.Models
+@model Project.ViewModel.MovieViewModel
+@{
+    Layout = null;
+}
+
+@if (TempData["success"] != null)
+{
+    <script>
+        alert("Payment Done Successfully!!!")
+    </script>
+}
+@if (TempData["CanBuy"] != null)
+{
+<script>
+       var msg = '@TempData["CanBuy"]';
+    alert(msg);
+</script>
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/MyStyle.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Movie Gallery</title>
+    <script>
+        function change() {
+            var selectedValue = document.getElementById("list").value;
+            if (selectedValue == "number") {
+                document.getElementById("demo").type = selectedValue;
+                document.getElementById("demo2").type = selectedValue;
+            }
+            else {
+                document.getElementById("demo").type = selectedValue;
+                document.getElementById("demo2").type = "hidden";
+            }
+            document.getElementById("demo").value = "";
+            document.getElementById("demo2").value = "";
+        }
+        function onSubmitClick() {
+            var x1 = parseInt(document.getElementById("demo").value);
+            var x2 = parseInt(document.getElementById("demo2").value);
+            if (x1 > x2 || x1 < 0 || x2 < 0) {
+                alert("Wrong values for search !!!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="topnav">
+        <a class="active" href="@Url.Action("MovieGallery", "User")">Movie Gallery</a>
+
+        <a href="@Url.Action("LoginUser", "User")">
+            <span> Login for users</span>
+        </a>
+        <a href="@Url.Action("RegisterUser", "User")">
+            <span> Register for users</span>
+        </a>
+        <a href="@Url.Action("ShoppingCart", "User")">
+            <span> Shopping Cart</span>
+        </a>
+        <a href="@Url.Action("LoginAdmin", "Admin")">
+            <span> Login for admins</span>
+        </a>
+        <a href="@Url.Action("RegisterAdmin", "Admin")">
+            <span> Register for admins</span>
+        </a>
+    </div>
+    <div>
+        <h1>Movie Gallery</h1>
+        @if (Session["testmsg"] != null)
+        {
+            <h4 style="color:blue;"> Welcome @Session["testmsg"]</h4>
+        }
+        else
+        {
+            <h4 style="color:blue;"> Welcome Guest</h4>
+        }
+        <form action="MovieGallery"> <input type="submit" value="Reset Page" /> </form>
+        <form action="SubSearch" method="post" onsubmit="return onSubmitClick();">
+            <strong> Search by </strong>
+            <select id="list" style="padding: 3px;" onchange="change();" name="Searchs">
+                <option value="date">date</option>
+                <option value="time">time</option>
+                <option value="text">category</option>
+                <option value="datetime-local">date and time</option>
+                <option value="number">price range</option>
+            </select>
+            <strong> with values </strong>
+            <input name="value1" type="date" id="demo" required>
+            <strong> To </strong>
+            <input name="value2" type="hidden" id="demo2" required>
+            <input type="submit" value="search" onclick="myFunction()">
+        </form>
+        <br />
+        <form action="SubOrder" method="post">
+            <label for="browser"><strong> Order according to:</strong></label>
+            <select name="states">
+                <option name="o1">Price increase</option>
+                <option name="o2">Price decrease</option>
+                <option name="o3">Most popular</option>
+                <option name="o4">Category</option>
+            </select>
+            <input type="submit">
+        </form>
+        <br />
+        <form action="SubFillter" method="post">
+            <strong> show only movies with the decreased price </strong> <input type="submit">
+        </form>
+        <br />
+        <form action="SelectSeat" method="post">
+            <table>
+                <tr>
+                    <th>Purchase</th>
+                    <th>Movie Name</th>
+                    <th>Date </th>
+                    <th>Time </th>
+                    <th>Hall ID </th>
+                    <th>Price </th>
+                    <th>Age Limitation</th>
+                    <th>Category </th>
+                    <th>Poster </th>
+                </tr>
+                @foreach (Movie movie in Model.movies)
+                {
+            <tr>
+                <td>
+                    <button name="MovieId" value=@movie.id> Purchase</button>
+                </td>
+                <td>@movie.MovieName</td>
+                <td>@movie.date </td>
+                <td>@movie.time </td>
+                <td>@movie.HallId</td>
+                <td> @movie.price   <s><br />@movie.preprice</s>  </td>
+                <td>@movie.age+ </td>
+                <td>@movie.category</td>
+                <td> <img src="@Url.Content(movie.poster)" height="100" width="100" /></td>
+            </tr>
+
+
+                }
+
+            </table>
+        </form>
+    </div>
+</body>
+</html>

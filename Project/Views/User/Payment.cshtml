@@ -1,0 +1,104 @@
+﻿@using Project.Models
+@using Project.Dal
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/MyStyle.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Credit Card</title>
+</head>
+<body>
+
+    <div class="topnav">
+        <a href="@Url.Action("MovieGallery", "User")">
+            <span> Movie Gallery</span>
+        </a>
+        <a href="@Url.Action("LoginUser", "User")">
+            <span> Login for users</span>
+        </a>
+        <a href="@Url.Action("RegisterUser", "User")">
+            <span> Register for users</span>
+        </a>
+        <a href="@Url.Action("ShoppingCart", "User")">
+            <span> Shopping Cart</span>
+        </a>
+
+        <a href="@Url.Action("LoginAdmin", "Admin")">
+            <span> Login for admins</span>
+        </a>
+        <a href="@Url.Action("RegisterAdmin", "Admin")">
+            <span> Register for admins</span>
+        </a>
+        <a class="active" href="">Payment</a>
+    </div>
+    <div>
+        @{
+            int TicketId;
+            TicketDal dal = new TicketDal();
+            List<Ticket> exist;
+            string email = (string)Session["email"];
+
+            if (TempData["TicketId"] != null)
+            {
+                Int32.TryParse((string)TempData["TicketId"], out TicketId);
+                exist = (from x in dal.Tickets where x.id.Equals(TicketId) select x).ToList<Ticket>();
+
+            }
+            else
+            {
+                exist = (from x in dal.Tickets where x.email.Equals(email) select x).ToList<Ticket>();
+            }
+            int sum = 0;
+            int price;
+            foreach (Ticket t in exist)
+            {
+                Int32.TryParse(t.price, out price);
+                sum += price;
+            }
+            <h1>Total Price :@sum </h1>
+
+        }
+        <form action="PaymentSuccess" method="post">
+            <input type="hidden" name="TicketId" value=@TempData["TicketId"]>
+            <h2>Credit Card Details</h2>
+            <br />
+            Full name    :<input id="Text1" type="text" required />
+            <br />
+            Card number  :<input id="Text1" type="number" required />
+            <br />
+
+            Month        :
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+            </select>
+
+            <br />
+            Year         :<input id="Text1" type="text" min="2020" required />
+            <br />
+            CCV          :<input id="Text1" type="number" required />
+            <br />
+            <input id="Submit1" type="submit" value="submit" />
+
+
+        </form>
+    </div>
+</body>
+</html>

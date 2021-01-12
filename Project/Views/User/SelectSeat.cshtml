@@ -1,0 +1,88 @@
+﻿@using Project.Models
+@model Project.ViewModel.HallViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/MyStyle2.css")" rel="stylesheet" type="text/css" />
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Select a seat</title>
+</head>
+<body>
+    <div class="topnav">
+        <a href="@Url.Action("MovieGallery", "User")">
+            <span> Movie Gallery</span>
+        </a>
+        <a href="@Url.Action("LoginUser", "User")">
+            <span> Login for users</span>
+        </a>
+        <a href="@Url.Action("RegisterUser", "User")">
+            <span> Register for users</span>
+        </a>
+        <a href="@Url.Action("ShoppingCart", "User")">
+            <span> Shopping Cart</span>
+        </a>
+
+        <a href="@Url.Action("LoginAdmin", "Admin")">
+            <span> Login for admins</span>
+        </a>
+        <a href="@Url.Action("RegisterAdmin", "Admin")">
+            <span> Register for admins</span>
+        </a>
+        <a class="active" href="">Select Seat</a>
+    </div>
+    <div>
+
+        <form action="SubShoppingCart" method="post">
+
+            Choose a seat number
+            <br />
+            <input id="Text1" type="number" name="seat" min="1" max=@TempData["NumSeats"] required />
+            <br />
+            @if (TempData["ChangeSeat"] == null)
+            {
+                <input id="Submit1" type="submit" value="Add to cart" style="margin:5px;" />
+                <input id="Submit1" type="submit" value="Payment" formaction=@Url.Action("PaymentBefore") formmethod="post" style="margin:5px;" />
+            }
+            else
+            {
+                <input id="Submit1" type="submit" value="Change seat" formaction=@Url.Action("SubChangeSeat") formmethod="post" style="margin:5px;" />
+            }
+
+            @if (TempData["testmsg"] != null)
+            {
+                <h4 style="color:red;">@TempData["testmsg"]</h4>
+            }
+            <input type="hidden" name="MovieId" value=@TempData["MovieId"]>
+            <input type="hidden" name="MovieName" value=@TempData["MovieName"]>
+            <input type="hidden" name="time" value=@TempData["time"]>
+            <input type="hidden" name="date" value=@TempData["date"]>
+            <input type="hidden" name="HallId" value=@TempData["HallId"]>
+            <input type="hidden" name="price" value=@TempData["price"]>
+            <input type="hidden" name="change" value=@TempData["ChangeSeat"]>
+        </form>
+        <br />
+        <br />
+        Number of seats in the hall is between 1  and @TempData["NumSeats"]
+        <br />
+        <table>
+            <tr>
+                <th>Occupied Seats</th>
+            </tr>
+            @foreach (string seat in Model.halls)
+            {
+                <tr>
+                    <td>@seat </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿@model Project.Models.Admin
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/MyStyle.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Register for admins</title>
+</head>
+<body>
+    <div class="topnav">
+        <a href="@Url.Action("MovieGallery", "User")">
+            <span> Movie Gallery</span>
+        </a>
+        <a href="@Url.Action("LoginUser", "User")">
+            <span> Login for users</span>
+        </a>
+        <a href="@Url.Action("RegisterUser", "User")">
+            <span> Register for users</span>
+        </a>
+        <a href="@Url.Action("ShoppingCart", "User")">
+            <span> Shopping Cart</span>
+        </a>
+
+        <a href="@Url.Action("LoginAdmin", "Admin")">
+            <span> Login for admins</span>
+        </a>
+        <a class="active" href="">Register for admins</a>
+    </div>
+    <div>
+        <form action="SubRegisterAdmin" method="post">
+
+            <h1>Register for admins</h1>
+            <br />
+            name : <input id="Text1" type="text" name="name" required />
+            <br />
+            email : <input id="Text1" type="email" name="email" required />
+            <br />
+            password : <input id="Text1" type="password" name="password" required />
+            <br />
+            age : <input id="Text1" type="number" name="age" min="0" required />
+            <br />
+            <input id="Submit1" type="submit" value="Register" />
+            <br />
+
+        </form>
+    </div>
+</body>
+</html>
+
+@if (TempData["testmsg"] != null)
+{
+    <h4 style="color:@TempData["color"];"> @TempData["testmsg"] </h4>
+}

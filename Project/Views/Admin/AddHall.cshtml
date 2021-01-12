@@ -1,0 +1,62 @@
+﻿@model Project.Models.Hall
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/MyStyle.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Add a new hall</title>
+</head>
+<body>
+    <div class="topnav">
+        <a href="@Url.Action("MovieGallery", "User")">
+            <span>Home Page</span>
+        </a>
+
+        <a href="@Url.Action("RemoveMovie", "Admin")">
+            <span>Remove Movies</span>
+        </a>
+
+        <a href="@Url.Action("AddMovie", "Admin")">
+            <span>Add Movies</span>
+        </a>
+
+        <a href="@Url.Action("ManagingPrices", "Admin")">
+            <span>Managing Prices</span>
+        </a>
+        <a href="@Url.Action("ManagingHalls", "Admin")">
+            <span>Managing Movie Halls</span>
+        </a>
+        <a href="@Url.Action("ManagingSeats", "Admin")">
+            <span>Managing Seats Number</span>
+        </a>
+        <a class="active" href="">Add Hall</a>
+    </div>
+    <div>
+        <form action="SubAddHall" method="post">
+
+            <h1> Add a new hall</h1>
+
+            Hall id        :<input id="Text1" type="number" name="HallId" min="1" required />
+            <br />
+
+            Number of seats:<input id="Text1" type="number" name="NumSeats" min="1" required />
+            <br />
+
+            <input id="Submit1" type="submit" value="Add" />
+
+        </form>
+    </div>
+</body>
+</html>
+
+@if (TempData["testmsg"] != null)
+{
+    <h4 style="color:@TempData["color"];"> @TempData["testmsg"] </h4>
+}
+

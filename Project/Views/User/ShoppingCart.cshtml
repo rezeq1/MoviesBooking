@@ -1,0 +1,100 @@
+﻿@using Project.Models
+@model Project.ViewModel.TicketViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="@Url.Content("~/Content/MyStyle.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <div class="topnav">
+        <a href="@Url.Action("MovieGallery", "User")">
+            <span> Movie Gallery</span>
+        </a>
+        <a href="@Url.Action("LoginUser", "User")">
+            <span> Login for users</span>
+        </a>
+        <a href="@Url.Action("RegisterUser", "User")">
+            <span> Register for users</span>
+        </a>
+        <a class="active" href="">Shopping Cart</a>
+
+        <a href="@Url.Action("LoginAdmin", "Admin")">
+            <span> Login for admins</span>
+        </a>
+        <a href="@Url.Action("RegisterAdmin", "Admin")">
+            <span> Register for admins</span>
+        </a>
+    </div>
+    <form action="Payment" method="post">
+        <div>
+            @if (Session["testmsg"] != null)
+            {
+                <h4 style="color:blue;"> Welcome @Session["testmsg"]</h4>
+            }
+            else
+            {
+                <h4 style="color:blue;"> Welcome Guest</h4>
+            }
+            <h1> Your shopping cart</h1>
+            <br />
+            <table>
+                <tr>
+                    <th>Actions</th>
+                    <th>Movie Name</th>
+                    <th>Date </th>
+                    <th>Time </th>
+                    <th>Price </th>
+                    <th>Hall ID </th>
+                    <th>Seat number </th>
+                </tr>
+                @foreach (Ticket ticket in Model.tickets)
+                {
+                    <tr>
+                        <td>
+
+                            @if (ticket.paid == "no")
+                            {
+                                <button name="TicketId" value=@ticket.id> Payment </button>
+                                <button name="MovieId" value=@ticket.id formaction=@Url.Action("ChangeSeat") formmethod="post" style="margin:5px;"> Change Seat</button>
+                            }
+                            else
+                            {
+                                <p> Paid </p>
+                            }
+                        </td>
+                        <td>@ticket.MovieName</td>
+                        <td>@ticket.date </td>
+                        <td>@ticket.time </td>
+                        <td>@ticket.price </td>
+                        <td>@ticket.HallId</td>
+                        <td>@ticket.seat</td>
+                    </tr>
+                }
+            </table>
+            <br />
+            @{
+                var AllPaid = (from x in Model.tickets where x.paid.Equals("no") select x).ToList<Ticket>();
+                if (AllPaid.Count != 0)
+                {
+                    <input id="Submit1" type="submit" value="Payment All" wirdth="100" height="20" />
+                }
+                else
+                {
+                    <input id="Submit1" type="submit" value="Payment All" wirdth="100" height="20" disabled />
+                }
+
+            }
+
+
+        </div>
+    </form>
+</body>
+</html>
